@@ -3,117 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Telma School - Catálogo Digital 📚</title>
+    <title>Telma School - Catálogo 📚</title>
     <style>
-        /* DISEÑO DE LA APP */
         :root {
             --primario: #ff6b6b;
-            --secundario: #48dbfb;
-            --acento: #feca57;
-            --fondo: #fdfae2;
+            --secundario: #4d96ff;
+            --acento: #ffca28;
+            --texto: #2d3436;
         }
 
         body {
             margin: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--fondo);
-            background-image: url("https://www.transparenttextures.com/patterns/mathematics.png");
-            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            /* FONDO DE MOSAICO ESCOLAR ANIMADO */
+            background-image: 
+                url("https://www.transparenttextures.com/patterns/mathematics.png"),
+                linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+            color: var(--texto);
         }
 
-        /* HEADER ESTILO MOSAICO */
+        /* PORTADA COLORIDA */
         header {
-            background: linear-gradient(135deg, var(--primario), var(--acento));
-            padding: 40px 20px;
+            background: linear-gradient(135deg, #ff6b6b, #ffca28, #4d96ff);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
+            padding: 50px 20px;
             text-align: center;
             color: white;
-            border-bottom: 6px solid #fff;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            border-bottom: 8px solid #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         header h1 { 
+            font-size: 3rem; 
             margin: 0; 
-            font-size: 2.5rem; 
-            text-shadow: 2px 2px #c0392b;
+            text-shadow: 3px 3px 0px rgba(0,0,0,0.2);
+            letter-spacing: 2px;
         }
 
-        header p { margin: 5px 0 0; opacity: 0.9; font-weight: bold; }
+        .ubicacion {
+            background: rgba(0,0,0,0.2);
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 20px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(5px);
+        }
 
-        /* CONTENEDOR PRINCIPAL */
-        .app-container {
-            padding: 15px;
-            max-width: 600px; /* Tamaño ideal para móvil */
+        /* CONTENEDOR DE PRODUCTOS */
+        .main-content {
+            padding: 20px 10px;
+            max-width: 800px;
             margin: 0 auto;
         }
 
-        .seccion-titulo {
+        .categoria-bloque {
+            margin-bottom: 40px;
+        }
+
+        .titulo-cat {
             background: var(--secundario);
             color: white;
-            padding: 10px 20px;
-            border-radius: 25px 5px 25px 5px;
+            padding: 12px 25px;
+            border-radius: 50px;
             display: inline-block;
-            margin: 20px 0 10px;
+            margin-bottom: 15px;
             font-weight: bold;
-            box-shadow: 3px 3px 0px #2980b9;
+            box-shadow: 4px 4px 0px #217dbb;
+            font-size: 1.2rem;
         }
 
-        /* CARRUSEL DE MOVIMIENTO */
-        .carousel-wrapper {
-            overflow: hidden;
-            background: rgba(255,255,255,0.6);
-            border-radius: 15px;
-            padding: 10px 0;
-        }
-
-        .carousel {
-            display: flex;
-            gap: 15px;
+        /* CARRUSEL DINÁMICO */
+        .carrusel-container {
             overflow-x: auto;
-            padding: 10px;
+            display: flex;
+            gap: 20px;
+            padding: 15px 5px;
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
         }
 
-        /* Ocultar barra de scroll */
-        .carousel::-webkit-scrollbar { display: none; }
+        .carrusel-container::-webkit-scrollbar { display: none; }
 
-        /* TARJETA DE PRODUCTO */
-        .card {
-            min-width: 160px;
+        /* TARJETA DE PRODUCTO MEJORADA */
+        .tarjeta {
+            min-width: 180px;
             background: white;
-            border-radius: 15px;
-            padding: 10px;
+            border-radius: 20px;
+            padding: 15px;
             text-align: center;
-            border: 2px solid #ddd;
-            transition: transform 0.3s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
         }
 
-        .card:active { transform: scale(0.95); }
+        .tarjeta:hover {
+            border-color: var(--acento);
+            transform: translateY(-5px);
+        }
 
-        .card img {
+        .tarjeta img {
             width: 100%;
-            height: 120px;
+            height: 140px;
             object-fit: contain;
-            border-radius: 10px;
+            border-radius: 15px;
+            background: #f9f9f9;
+            margin-bottom: 10px;
         }
 
-        .card h4 { margin: 10px 0 5px; font-size: 0.9rem; height: 35px; overflow: hidden; }
-        
-        .precio {
+        .tarjeta h3 { font-size: 1rem; margin: 10px 0; height: 40px; overflow: hidden; }
+
+        .precio-tag {
             color: #27ae60;
             font-weight: bold;
-            font-size: 1.1rem;
+            font-size: 1.3rem;
             display: block;
-            margin-bottom: 5px;
         }
 
-        .tag {
-            background: #eee;
-            font-size: 0.7rem;
-            padding: 2px 8px;
-            border-radius: 10px;
-            color: #777;
+        .btn-comprar {
+            background: var(--primario);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 15px;
+            margin-top: 10px;
+            width: 100%;
+            font-weight: bold;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #333;
+            color: white;
+            margin-top: 50px;
         }
 
     </style>
@@ -123,20 +155,133 @@
     <header>
         <h1>✏️ Telma School</h1>
         <p>¡Tu lista escolar lista hoy! 🎒✨</p>
+        <div class="ubicacion">📍 Aldea los Zompoperos, San José de Comayagua</div>
     </header>
 
-    <div class="app-container">
+    <div class="main-content">
         
-        <div class="seccion-titulo">📓 Útiles Escolares</div>
-        <div class="carousel-wrapper">
-            <div class="carousel" id="cat1">
-                <div class="card">
-                    <img src="https://m.media-amazon.com/images/I/71Y8w4hL1FL._AC_SL1500_.jpg" alt="">
-                    <h4>Cuaderno Espiral 1 Materia</h4>
-                    <span class="precio">L. 45.00</span>
-                    <span class="tag">Scribe</span>
+        <div class="categoria-bloque">
+            <div class="titulo-cat">📓 Cuadernos y Libretas</div>
+            <div class="carrusel-container" id="scroll-1">
+                <div class="tarjeta">
+                    <img src="https://images.thdstatic.com/productImages/4b484542-6f91-49b0-9c31-7290d23f721c/svn/mead-notebooks-mea06712-64_1000.jpg" alt="Cuaderno">
+                    <h3>Cuaderno de Dibujo</h3>
+                    <span class="precio-tag">L. 85.00</span>
+                    <button class="btn-comprar">Agregar</button>
                 </div>
-                <div class="card">
-                    <img src="https://m.media-amazon.com/images/I/81xU+KxR9tL._AC_SL1500_.jpg" alt="">
-                    <h4>Carpeta Oxford Azul</h4>
-                    <span class="precio">L. 3
+                <div class="tarjeta">
+                    <img src="https://m.media-amazon.com/images/I/71Y8w4hL1FL._AC_UF1000,1000_QL80_.jpg" alt="Cuaderno">
+                    <h3>Cuaderno 1 Materia</h3>
+                    <span class="precio-tag">L. 45.00</span>
+                    <button class="btn-comprar">Agregar</button>
+                </div>
+                <div class="tarjeta">
+                    <img src="https://m.media-amazon.com/images/I/81xU+KxR9tL._AC_SL1500_.jpg" alt="Carpeta">
+                    <h3>Carpeta Oxford</h3>
+                    <span class="precio-tag">L. 35.00</span>
+                    <button class="btn-comprar">Agregar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="categoria-bloque">
+            <div class="titulo-cat">🖋️ Lápices y Lapiceros</div>
+            <div class="carrusel-container" id="scroll-2">
+                <div class="tarjeta">
+                    <img src="https://m.media-amazon.com/images/I/71m09uE5V9L._AC_SL1500_.jpg" alt="Lápiz">
+                    <h3>Lápiz Grafito Mongol</h3>
+                    <span class="precio-tag">L. 8.00</span>
+                    <button class="btn-comprar">Agregar</button>
+                </div>
+                <div class="tarjeta">
+                    <img src="https://m.media-amazon.com/images/I/71P775S6LFL._AC_SL1500_.jpg" alt="Bolígrafos">
+                    <h3>Pack Bolis BIC</h3>
+                    <span class="precio-tag">L. 45.00</span>
+                    <button class="btn-comprar">Agregar</button>
+                </div>
+                <div class="tarjeta">
+                    <img src="https://m.media-amazon.com/images/I/81P58X3NfTL._AC_SL1500_.jpg" alt="Colores">
+                    <h3>Colores x24 Unid.</h3>
+                    <span class="precio-tag">L. 140.00</span>
+                    <button class="btn-comprar">Agregar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="categoria-bloque">
+            <div class="titulo-cat">🎨 Témperas y Arte</div>
+            <div class="carrusel-container" id="scroll-3">
+                <div class="tarjeta">
+                    <img src="https://m.media-amazon.com/images/I/81B4N4wW8YL._AC_SL1500_.jpg" alt="Témperas">
+                    <h3>Témperas 6 Colores</h3>
+                    <span class="precio-tag">L. 65.00</span>
+                    <button class="btn-comprar">Agregar</button>
+                </div>
+                <div class="tarjeta">
+                    <img src="https://m.media-amazon.com/images/I/81Zf7uF+pQL._AC_SL1500_.jpg" alt="Escarcha">
+                    <h3>Set de Escarchas</h3>
+                    <span class="precio-tag">L. 30.00</span>
+                    <button class="btn-comprar">Agregar</button>
+                </div>
+                <div class="tarjeta">
+                    <img src="https://m.media-amazon.com/images/I/71Jg6m6VjDL._AC_SL1500_.jpg" alt="Cartulina">
+                    <h3>Block de Cartulina</h3>
+                    <span class="precio-tag">L. 110.00</span>
+                    <button class="btn-comprar">Agregar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="categoria-bloque">
+            <div class="titulo-cat">✂️ Papelería Variada</div>
+            <div class="carrusel-container" id="scroll-4">
+                <div class="tarjeta">
+                    <img src="https://m.media-amazon.com/images/I/81Xm-CSu39L._AC_SL1500_.jpg" alt="Tijeras">
+                    <h3>Tijera Escolar</h3>
+                    <span class="precio-tag">L. 25.00</span>
+                    <button class="btn-comprar">Agregar</button>
+                </div>
+                <div class="tarjeta">
+                    <img src="https://m.media-amazon.com/images/I/61S6h+Yv56L._AC_SL1500_.jpg" alt="Pegamento">
+                    <h3>Pegamento Blanco</h3>
+                    <span class="precio-tag">L. 20.00</span>
+                    <button class="btn-comprar">Agregar</button>
+                </div>
+                <div class="tarjeta">
+                    <img src="https://m.media-amazon.com/images/I/81A+X3O5vPL._AC_SL1500_.jpg" alt="Papel Tapiz">
+                    <h3>Papel Tapiz Rollo</h3>
+                    <span class="precio-tag">L. 95.00</span>
+                    <button class="btn-comprar">Agregar</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>© 2026 Telma School - San José de Comayagua</p>
+        <p>Honduras 🇭🇳</p>
+    </footer>
+
+    <script>
+        // Movimiento automático de los carruseles
+        function startAutoScroll(id) {
+            const container = document.getElementById(id);
+            let scrollAmount = 0;
+            
+            setInterval(() => {
+                container.scrollLeft += 1;
+                if (container.scrollLeft >= (container.scrollWidth - container.offsetWidth)) {
+                    container.scrollLeft = 0;
+                }
+            }, 30);
+        }
+
+        // Iniciamos todos los carruseles
+        startAutoScroll('scroll-1');
+        startAutoScroll('scroll-2');
+        startAutoScroll('scroll-3');
+        startAutoScroll('scroll-4');
+    </script>
+</body>
+</html>
