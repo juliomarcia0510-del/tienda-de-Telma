@@ -236,4 +236,74 @@
         { n: "Suscripción 1 día Facebook Ilimitado", p: "22.00", v: "1 Día", d: "Navega en Facebook de forma ilimitada." },
         { n: "Suscripción 1 día WhatsApp Chat Ilimitado", p: "32.00", v: "1 Día", d: "WhatsApp Chat ilimitado + 200MB para navegar." },
         { n: "Paquetigo 25 min TR/USA/CAN", p: "25.00", v: "2 Días", d: "25 min a USA, Canadá y TR." },
-        { n: "ViX Premium por 7 días
+        { n: "ViX Premium por 7 días", p: "50.00", v: "7 Días", d: "Acceso total a contenido ViX Premium." },
+        { n: "Súper Recarga ViX Premium 10GB", p: "155.00", v: "7 Días", d: "10GB + Min Tigo + WA + ViX Premium + L300 promo." }
+    ];
+
+    let itemsSeleccionado = {};
+
+    // --- FUNCIONES ---
+    function showSection(id) {
+        document.querySelectorAll('.section-content').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    function init() {
+        // Cargar Normal
+        const nGrid = document.getElementById('normalGrid');
+        saldoNormal.forEach(monto => {
+            const btn = document.createElement('div');
+            btn.className = 'saldo-btn';
+            btn.innerText = 'L ' + monto;
+            btn.onclick = () => openModal("Saldo Normal", "L " + monto);
+            nGrid.appendChild(btn);
+        });
+
+        // Cargar Super
+        const sGrid = document.getElementById('superGrid');
+        superRecargas.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.onclick = () => openModal(item.n, "L " + item.p);
+            card.innerHTML = `
+                <div>
+                    <h3>${item.n}</h3>
+                    <span class="price-tag">L ${item.p}</span>
+                    <p class="details">${item.d}</p>
+                </div>
+                <span class="vigencia">Vigencia: ${item.v}</span>
+            `;
+            sGrid.appendChild(card);
+        });
+    }
+
+    function openModal(nombre, precio) {
+        itemsSeleccionado = { nombre, precio };
+        document.getElementById('modalTitle').innerText = precio;
+        document.getElementById('modalDesc').innerText = nombre;
+        document.getElementById('modal').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('modal').style.display = 'none';
+    }
+
+    function sendToWhatsApp() {
+        const num = document.getElementById('userPhone').value;
+        if (num.length < 8) {
+            alert("Por favor ingresa un número válido");
+            return;
+        }
+        const msg = `¡Hola! Quiero solicitar una recarga:\n\n📌 *Tipo:* ${itemsSeleccionado.nombre}\n💰 *Monto:* ${itemsSeleccionado.precio}\n📱 *Número:* ${num}`;
+        const url = `https://wa.me/${MI_WHATSAPP}?text=${encodeURIComponent(msg)}`;
+        window.open(url, '_blank');
+        closeModal();
+    }
+
+    init();
+</script>
+
+</body>
+</html>
