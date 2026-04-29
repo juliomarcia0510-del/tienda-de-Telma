@@ -3,227 +3,523 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Telma School - Tu Tienda Escolar 🎒</title>
+    <title>Super Recargas Rápidas</title>
+    <link rel="icon" href="https://image.flaticon.com/icons/png/512/3063/3063822.png" type="image/png">
     
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
-
     <style>
+        /* --- ESTILOS CSS GENERALES --- */
         :root {
-            --primario: #ff6b6b;
-            --secundario: #4db6ac;
-            --acento: #ffca28;
-            --fondo-hoja: #f8f9fa;
+            --primary-color: #007bff; /* Azul vibrante */
+            --secondary-color: #f4f7f6; /* Fondo gris muy claro */
+            --accent-color: #25d366; /* Verde WhatsApp */
+            --text-color: #333;
+            --card-bg: #fff;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
         body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            font-family: 'Quicksand', sans-serif; /* Letra clara y moderna */
-            background-color: var(--fondo-hoja);
-            /* Fondo de cuadrícula escolar */
-            background-image: radial-gradient(#d1d1d1 1px, transparent 1px);
-            background-size: 25px 25px;
-            color: #333;
+            padding: 0;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
-        /* ENCABEZADO */
+        /* --- ENCABEZADO (HEADER) --- */
         header {
-            background: white;
-            padding: 40px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
             text-align: center;
-            border-bottom: 5px solid var(--acento);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         header h1 {
-            font-size: 2.8rem;
             margin: 0;
-            color: var(--primario);
-            letter-spacing: -1px;
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .ubicacion-tag {
-            display: inline-block;
-            background: var(--secundario);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            margin-top: 15px;
-            font-size: 0.9rem;
-            font-weight: bold;
+        header p {
+            margin: 5px 0 0;
+            font-size: 14px;
+            opacity: 0.9;
         }
 
-        /* CONTENEDOR PRINCIPAL */
+        /* --- CONTENEDOR PRINCIPAL --- */
         .container {
-            padding: 20px 15px;
-            max-width: 900px;
-            margin: 0 auto;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+            flex: 1; /* Empuja el footer hacia abajo */
         }
 
-        .seccion-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 30px 0 15px;
+        /* --- SECCIÓN DE TARJETAS DE RECARGA --- */
+        .recargas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
         }
 
-        .seccion-titulo {
-            font-size: 1.5rem;
-            color: #2c3e50;
-            border-left: 5px solid var(--primario);
-            padding-left: 10px;
-        }
-
-        /* CARRUSEL DE PRODUCTOS */
-        .carrusel {
-            display: flex;
-            gap: 15px;
-            overflow-x: auto;
-            padding: 10px 5px;
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .carrusel::-webkit-scrollbar { display: none; }
-
-        /* TARJETA DE PRODUCTO ESTILO PROFESIONAL */
-        .tarjeta {
-            min-width: 170px;
-            max-width: 170px;
-            background: white;
-            border-radius: 15px;
-            padding: 15px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            border: 1px solid #eee;
-            transition: transform 0.2s;
-        }
-
-        .tarjeta img {
-            width: 100%;
-            height: 130px;
-            object-fit: contain;
-            margin-bottom: 10px;
-        }
-
-        .tarjeta h3 {
-            font-size: 0.95rem;
-            margin: 10px 0;
-            color: #444;
-            height: 40px;
+        .recarga-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
-        .precio {
-            font-size: 1.2rem;
-            color: #27ae60;
-            font-weight: 700;
-            display: block;
-            margin-bottom: 10px;
+        .recarga-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
         }
 
-        .btn-add {
-            background: #f1f2f6;
-            border: none;
-            padding: 8px;
+        /* Efecto dinámico de brillo al pasar el mouse */
+        .recarga-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
             width: 100%;
-            border-radius: 10px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.5s;
+        }
+
+        .recarga-card:hover::after {
+            left: 100%;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .recarga-title {
+            font-size: 18px;
             font-weight: bold;
-            color: var(--primario);
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .recarga-price {
+            font-size: 22px;
+            font-weight: bold;
+            color: #28a745; /* Verde para el precio */
+            background-color: #e6f9ed;
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+
+        .recarga-details {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #666;
+        }
+
+        .recarga-details strong {
+            color: var(--text-color);
+        }
+
+        .vigencia {
+            font-style: italic;
+            color: #888;
+            margin-bottom: 15px;
+        }
+
+        /* Iconos de aplicaciones (WhatsApp, FB, etc.) */
+        .app-icons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .app-icons img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .select-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        .recarga-card:hover .select-btn {
+            background-color: #0056b3;
+        }
+
+        /* --- VENTANA MODAL (POP-UP) --- */
+        .modal {
+            display: none; /* Oculta por defecto */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5); /* Fondo semitransparente */
+            backdrop-filter: blur(5px); /* Efecto de desenfoque dinámico */
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            position: relative;
+            animation: animatetop 0.4s; /* Animación de entrada */
+        }
+
+        /* Animación de entrada de la modal */
+        @keyframes animatetop {
+            from {top: -300px; opacity: 0}
+            to {top: 10%; opacity: 1}
+        }
+
+        .close-modal {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            font-weight: bold;
             cursor: pointer;
         }
 
+        .close-modal:hover {
+            color: #333;
+        }
+
+        .modal h2 {
+            margin-top: 0;
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        .modal p {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box; /* Asegura que el padding no agrande el input */
+            transition: border-color 0.3s ease;
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .send-btn {
+            background-color: var(--accent-color); /* Verde WhatsApp */
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .send-btn:hover {
+            background-color: #1ebe57;
+        }
+
+        .send-btn img {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* --- PIE DE PÁGINA (FOOTER) --- */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        /* --- RESPONSIVIDAD PARA MÓVILES --- */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 20px;
+            }
+            .container {
+                padding: 0 10px;
+            }
+            .recargas-grid {
+                grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
+            }
+            .modal-content {
+                margin: 20% auto;
+                padding: 20px;
+            }
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>✏️ Telma School</h1>
-        <p style="margin: 5px 0; color: #7f8c8d;">¡Tu tienda escolar favorita!</p>
-        <div class="ubicacion-tag">📍 Aldea los Zompoperos, Comayagua</div>
+        <h1>SUPER RECARGAS RÁPIDAS</h1>
+        <p>Selecciona tu plan y recarga en segundos vía WhatsApp</p>
     </header>
 
     <div class="container">
-        
-        <div class="seccion-header">
-            <span style="font-size: 1.8rem;">🖍️</span>
-            <h2 class="seccion-titulo">Lápices y Colores</h2>
-        </div>
-        <div class="carrusel">
-            <div class="tarjeta">
-                <img src="https://m.media-amazon.com/images/I/71m09uE5V9L._AC_SL1500_.jpg" alt="Lápiz">
-                <h3>Lápiz Grafito #2 Mongol</h3>
-                <span class="precio">L. 8.00</span>
-                <button class="btn-add">Añadir +</button>
+        <div class="recargas-grid" id="recargasContainer">
             </div>
-            <div class="tarjeta">
-                <img src="https://m.media-amazon.com/images/I/81P58X3NfTL._AC_SL1500_.jpg" alt="Colores">
-                <h3>Colores Prismacolor x24</h3>
-                <span class="precio">L. 165.00</span>
-                <button class="btn-add">Añadir +</button>
-            </div>
-            <div class="tarjeta">
-                <img src="https://m.media-amazon.com/images/I/71oX3L76XyL._AC_SL1500_.jpg" alt="Crayones">
-                <h3>Crayolas Jumbo x12</h3>
-                <span class="precio">L. 95.00</span>
-                <button class="btn-add">Añadir +</button>
-            </div>
-        </div>
-
-        <div class="seccion-header">
-            <span style="font-size: 1.8rem;">📓</span>
-            <h2 class="seccion-titulo">Cuadernos y Blocks</h2>
-        </div>
-        <div class="carrusel">
-            <div class="tarjeta">
-                <img src="https://m.media-amazon.com/images/I/71Y8w4hL1FL._AC_SL1500_.jpg" alt="Cuaderno">
-                <h3>Cuaderno Espiral 1 Mat.</h3>
-                <span class="precio">L. 45.00</span>
-                <button class="btn-add">Añadir +</button>
-            </div>
-            <div class="tarjeta">
-                <img src="https://m.media-amazon.com/images/I/61m02oFhM-L._AC_SL1000_.jpg" alt="Block">
-                <h3>Block de Dibujo A4</h3>
-                <span class="precio">L. 75.00</span>
-                <button class="btn-add">Añadir +</button>
-            </div>
-            <div class="tarjeta">
-                <img src="https://m.media-amazon.com/images/I/81xU+KxR9tL._AC_SL1500_.jpg" alt="Carpeta">
-                <h3>Carpeta con Clip</h3>
-                <span class="precio">L. 35.00</span>
-                <button class="btn-add">Añadir +</button>
-            </div>
-        </div>
-
-        <div class="seccion-header">
-            <span style="font-size: 1.8rem;">🎨</span>
-            <h2 class="seccion-titulo">Témperas y Arte</h2>
-        </div>
-        <div class="carrusel">
-            <div class="tarjeta">
-                <img src="https://m.media-amazon.com/images/I/81B4N4wW8YL._AC_SL1500_.jpg" alt="Témperas">
-                <h3>Témperas Lavables x6</h3>
-                <span class="precio">L. 68.00</span>
-                <button class="btn-add">Añadir +</button>
-            </div>
-            <div class="tarjeta">
-                <img src="https://m.media-amazon.com/images/I/71u9i0+4zSL._AC_SL1500_.jpg" alt="Pinceles">
-                <h3>Set Pinceles Escolares</h3>
-                <span class="precio">L. 55.00</span>
-                <button class="btn-add">Añadir +</button>
-            </div>
-            <div class="tarjeta">
-                <img src="https://m.media-amazon.com/images/I/81Zf7uF+pQL._AC_SL1500_.jpg" alt="Escarcha">
-                <h3>Pegamento con Escarcha</h3>
-                <span class="precio">L. 25.00</span>
-                <button class="btn-add">Añadir +</button>
-            </div>
-        </div>
-
     </div>
 
-    <footer style="text-align: center; padding: 40px; color: #999; font-size: 0.8rem;">
-        © 2026 Telma School | San José de Comayagua
+    <div id="numberModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <h2>¡Casi listo!</h2>
+            <p>Ingresa el número de teléfono Tigo al que deseas enviar la <strong id="modalRecargaName"></strong>.</p>
+            
+            <div class="input-group">
+                <label for="phoneNumber">Número de Teléfono (Tigo):</label>
+                <input type="tel" id="phoneNumber" placeholder="Ej: 92465428" required pattern="[0-9]{8}">
+            </div>
+
+            <button class="send-btn" id="sendWhatsAppBtn">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+                Enviar Solicitud
+            </button>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2023 Tu Red de Super Recargas. Todos los derechos reservados.
     </footer>
 
+    <script>
+        // 1. CONFIGURACIÓN: Reemplaza esto con tu número de WhatsApp real (sin el +)
+        const MY_WHATSAPP_NUMBER = "TU_NUMERO_DE_WHATSAPP"; // Ej: "50412345678"
+
+        // 2. DATOS DE LAS RECARGAS (Basado en las imágenes que enviaste)
+        const recargasData = [
+            {
+                nombre: "Paquetigo 60 min TR/USA/CAN + 30MB",
+                precio: "L 35.00",
+                detalles: "60 min a US/CAN/TR + 30MB",
+                vigencia: "2 días",
+                apps: ["ws", "fb", "ig"] // Iconos a mostrar
+            },
+            {
+                nombre: "Super Recarga 7 días",
+                precio: "L 122.00",
+                detalles: "11.5GB + 1GB IG y X + WA + Min Tigo + WA + FB + L300 saldo promo.",
+                vigencia: "7 Días",
+                apps: ["ws", "fb", "ig", "x"]
+            },
+            {
+                nombre: "Super Recarga 15 días",
+                precio: "L 235.00",
+                detalles: "23GB + 2GB TikTok, IG y X + WA + Min Tigo + FB + L600 saldo promo.",
+                vigencia: "15 Días",
+                apps: ["ws", "fb", "ig", "x", "tk"]
+            },
+            {
+                nombre: "Super Recarga Gamer Pro, 7 días",
+                precio: "L 125.00",
+                detalles: "15.5GB + 1GB TikTok/ YT/ 4 Juegos (Clash of Clans, Free Fire, Candy Crush y Clash Royale) + Min Tigo + WA + FB + L330 saldo promo.",
+                vigencia: "7 Días",
+                apps: ["ws", "fb", "tk", "yt", "freefire", "clash"]
+            },
+            {
+                nombre: "Super Recarga 1 día",
+                precio: "L 36.00",
+                detalles: "2GB + Min Tigo + WA + L75 saldo promo",
+                vigencia: "1 Día",
+                apps: ["ws"]
+            },
+            {
+                nombre: "Super Recarga 3 días",
+                precio: "L 67.00",
+                detalles: "6.5GB + Min Tigo + WA + L150 saldo promo.",
+                vigencia: "3 Días",
+                apps: ["ws", "fb"]
+            },
+            {
+                nombre: "Super Recarga Gamer Pro, 3 días",
+                precio: "L 70.00",
+                detalles: "9GB + 1GB TikTok/YouTube/2 Juegos (Clash of Clans y Free Fire) + Min Tigo + WA + L180 saldo promo.",
+                vigencia: "3 Días",
+                apps: ["ws", "fb", "tk", "yt", "freefire", "clash"]
+            },
+             {
+                nombre: "Super Recarga GB Ilimitados, 7 días",
+                precio: "L 160.00",
+                detalles: "GB Ilim + Vix Premium + Min Tigo + WA + FB + L130 saldo promo. (Hotspot no disponible)",
+                vigencia: "7 Días",
+                apps: ["ws", "fb", "vix"]
+            }
+        ];
+
+        // URLs de los iconos de las apps
+        const appIconUrls = {
+            ws: "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg",
+            fb: "https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg",
+            ig: "https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png",
+            x: "https://upload.wikimedia.org/wikipedia/commons/5/57/X_logo_2023_%28white%29.svg", // Logo X moderno
+            tk: "https://upload.wikimedia.org/wikipedia/en/a/a9/TikTok_logo.svg",
+            yt: "https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png",
+            freefire: "https://GarenaFreeFire.com/wp-content/uploads/2021/08/icon-freefire.png", // Icono Free Fire
+            clash: "https://vignette.wikia.nocookie.net/clashofclans/images/2/22/Icon_ClashofClans.png", // Icono Clash of Clans
+            vix: "https://upload.wikimedia.org/wikipedia/commons/0/0d/Vix_logo.svg"
+        };
+
+        // 3. FUNCIÓN PARA GENERAR LAS TARJETAS DINÁMICAMENTE
+        function renderRecargas() {
+            const container = document.getElementById('recargasContainer');
+            
+            recargasData.forEach(recarga => {
+                const card = document.createElement('div');
+                card.className = 'recarga-card';
+                card.onclick = () => openModal(recarga.nombre, recarga.precio); // Hace toda la tarjeta clicable
+
+                // Generar iconos de apps
+                let appsHtml = '<div class="app-icons">';
+                recarga.apps.forEach(app => {
+                    if (appIconUrls[app]) {
+                        appsHtml += `<img src="${appIconUrls[app]}" alt="${app}">`;
+                    }
+                });
+                appsHtml += '</div>';
+
+                card.innerHTML = `
+                    <div>
+                        <div class="card-header">
+                            <h3 class="recarga-title">${recarga.nombre}</h3>
+                            <span class="recarga-price">${recarga.precio}</span>
+                        </div>
+                        <p class="recarga-details">${recarga.detalles}</p>
+                        <p class="vigencia">Vigencia: <strong>${recarga.vigencia}</strong></p>
+                        ${appsHtml}
+                    </div>
+                    <button class="select-btn">Seleccionar</button>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        // 4. LÓGICA DE LA VENTANA MODAL (POP-UP)
+        const modal = document.getElementById('numberModal');
+        const closeModalBtn = document.getElementById('closeModal');
+        const modalRecargaName = document.getElementById('modalRecargaName');
+        let selectedRecarga = { nombre: '', precio: '' };
+
+        function openModal(nombre, precio) {
+            selectedRecarga = { nombre, precio };
+            modalRecargaName.innerText = `${nombre} (${precio})`;
+            modal.style.display = "block";
+            document.getElementById('phoneNumber').focus(); // Pone el foco en el input
+        }
+
+        // Cerrar modal al hacer clic en la 'X'
+        closeModalBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // Cerrar modal al hacer clic fuera de ella
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // 5. LÓGICA PARA ENVIAR A WHATSAPP
+        const sendBtn = document.getElementById('sendWhatsAppBtn');
+        const phoneInput = document.getElementById('phoneNumber');
+
+        sendBtn.onclick = function() {
+            const phoneNumber = phoneInput.value.trim();
+
+            // Validación simple del número (8 dígitos)
+            if (phoneNumber.length !== 8 || isNaN(phoneNumber)) {
+                alert("Por favor, ingresa un número de teléfono válido de 8 dígitos.");
+                phoneInput.focus();
+                return;
+            }
+
+            // Crear el mensaje formateado para WhatsApp
+            const message = `Hola, quiero solicitar una *Super Recarga*:\n\n` +
+                            `*Plan:* ${selectedRecarga.nombre}\n` +
+                            `*Precio:* ${selectedRecarga.precio}\n` +
+                            `*Número a recargar:* ${phoneNumber}\n\n` +
+                            `Por favor, indícame los pasos para el pago.`;
+
+            // Codificar el mensaje para la URL
+            const encodedMessage = encodeURIComponent(message);
+
+            // Crear la URL de WhatsApp (funciona en móvil y web)
+            const whatsappUrl = `https://wa.me/${MY_WHATSAPP_NUMBER}?text=${encodedMessage}`;
+
+            // Abrir WhatsApp en una nueva pestaña
+            window.open(whatsappUrl, '_blank');
+
+            // Opcional: Cerrar la modal después de enviar
+            modal.style.display = "none";
+            phoneInput.value = ''; // Limpiar el input
+        }
+
+        // Iniciar la generación de tarjetas al cargar la página
+        window.onload = renderRecargas;
+
+    </script>
 </body>
 </html>
