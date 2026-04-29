@@ -3,307 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recargas Tigo - Enlace Rápido</title>
+    <title>Mi Abarrotería - Catálogo Honduras</title>
     <style>
         :root {
-            --tigo-blue: #00377d;
-            --tigo-light-blue: #00a1e1;
-            --accent-green: #25d366;
-            --bg-gray: #f0f2f5;
-            --white: #ffffff;
-            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --primary: #27ae60;
+            --secondary: #2980b9;
+            --bg: #f4f7f6;
+            --text: #333;
         }
-
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-gray);
-            color: #333;
-        }
-
-        header {
-            background-color: var(--tigo-blue);
-            color: white;
-            padding: 20px;
-            text-align: center;
-            box-shadow: var(--shadow);
-        }
-
-        /* --- PESTAÑAS (TABS) --- */
-        .tabs-container {
-            display: flex;
-            justify-content: center;
-            background: white;
-            border-bottom: 2px solid #ddd;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .tab-btn {
-            padding: 15px 25px;
-            border: none;
-            background: none;
-            font-size: 16px;
-            font-weight: bold;
-            color: #666;
-            cursor: pointer;
-            transition: 0.3s;
-            border-bottom: 3px solid transparent;
-        }
-
-        .tab-btn.active {
-            color: var(--tigo-blue);
-            border-bottom: 3px solid var(--tigo-blue);
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 0 15px;
-        }
-
-        .section-content { display: none; }
-        .section-content.active { display: block; }
-
-        /* --- GRID DE SALDO NORMAL --- */
-        .saldo-normal-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 15px;
-            padding: 20px 0;
-        }
-
-        .saldo-btn {
-            background: white;
-            border: 2px solid var(--tigo-blue);
-            border-radius: 10px;
-            padding: 20px;
-            font-size: 20px;
-            font-weight: bold;
-            color: var(--tigo-blue);
-            cursor: pointer;
-            transition: 0.3s;
-            text-align: center;
-            box-shadow: var(--shadow);
-        }
-
-        .saldo-btn:hover {
-            background: var(--tigo-blue);
-            color: white;
-            transform: scale(1.05);
-        }
-
-        /* --- GRID DE SUPER RECARGAS --- */
-        .super-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            padding: 20px 0;
-        }
-
-        .card {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: var(--shadow);
-            border-left: 6px solid var(--tigo-light-blue);
-            cursor: pointer;
-            transition: transform 0.2s;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); margin: 0; padding: 0; color: var(--text); }
+        header { background: var(--primary); color: white; text-align: center; padding: 1.5rem; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .container { max-width: 1000px; margin: auto; padding: 20px; }
+        
+        h2 { border-left: 5px solid var(--secondary); padding-left: 10px; margin-top: 40px; color: #2c3e50; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; }
+        
+        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s; text-align: center; padding-bottom: 15px; }
         .card:hover { transform: translateY(-5px); }
-        .card h3 { margin: 0 0 10px 0; color: var(--tigo-blue); font-size: 18px; }
-        .price-tag { font-size: 22px; color: #28a745; font-weight: bold; margin-bottom: 10px; display: block; }
-        .details { font-size: 14px; color: #555; margin-bottom: 15px; line-height: 1.4; }
-        .vigencia { font-size: 12px; font-weight: bold; color: #888; text-transform: uppercase; }
-
-        .app-icons { display: flex; gap: 8px; margin-top: 10px; }
-        .app-icons img { width: 22px; height: 22px; }
-
-        /* --- MODAL --- */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(5px);
-            z-index: 2000;
-        }
-
-        .modal-content {
-            background: white;
-            width: 90%;
-            max-width: 400px;
-            margin: 100px auto;
-            padding: 30px;
-            border-radius: 20px;
-            text-align: center;
-            position: relative;
-        }
-
-        .input-num {
-            width: 100%;
-            padding: 15px;
-            margin: 20px 0;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            font-size: 18px;
-            box-sizing: border-box;
-        }
-
-        .btn-ws {
-            background: var(--accent-green);
-            color: white;
-            border: none;
-            padding: 15px 20px;
-            width: 100%;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
+        .card img { width: 100%; height: 150px; object-fit: cover; }
+        .card h3 { font-size: 1rem; margin: 10px 0 5px; }
+        .card p { color: var(--primary); font-weight: bold; margin: 0; }
+        
         @media (max-width: 600px) {
-            .super-grid { grid-template-columns: 1fr; }
+            .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Portal de Recargas</h1>
-    <p>Rápido, fácil y directo a tu WhatsApp</p>
+    <h1>🛒 Mi Tienda de Abarrotería</h1>
+    <p>Calidad y frescura hasta tu hogar</p>
 </header>
 
-<div class="tabs-container">
-    <button class="tab-btn active" onclick="showSection('super')">Súper Recargas</button>
-    <button class="tab-btn" onclick="showSection('normal')">Saldo Normal</button>
-</div>
-
 <div class="container">
-    <div id="super" class="section-content active">
-        <div class="super-grid" id="superGrid">
-            </div>
+
+    <h2>🌾 Canasta Básica</h2>
+    <div class="grid">
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?q=80&w=400" alt="Arroz">
+            <h3>Arroz Blanco (lb)</h3>
+            <p>L. 12.00</p>
+        </div>
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1551462147-ff29053fad31?q=80&w=400" alt="Frijoles">
+            <h3>Frijoles Rojos (lb)</h3>
+            <p>L. 20.00</p>
+        </div>
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1621841957884-1210fe19d66d?q=80&w=400" alt="Azúcar">
+            <h3>Azúcar Sulúa (lb)</h3>
+            <p>L. 15.00</p>
+        </div>
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1528733918455-5a59687cedf0?q=80&w=400" alt="Huevos">
+            <h3>Cartón de Huevos</h3>
+            <p>L. 90.00</p>
+        </div>
     </div>
 
-    <div id="normal" class="section-content">
-        <div class="saldo-normal-grid" id="normalGrid">
-            </div>
+    <h2>🥤 Refrescos y Bebidas</h2>
+    <div class="grid">
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=400" alt="Coca Cola">
+            <h3>Coca-Cola 3 Litros</h3>
+            <p>L. 65.00</p>
+        </div>
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1531384370597-8590413bb50a?q=80&w=400" alt="Pepsi">
+            <h3>Pepsi 1.5 Litros</h3>
+            <p>L. 35.00</p>
+        </div>
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1624517452488-04869289c4ca?q=80&w=400" alt="Jugo">
+            <h3>Jugo Sula Naranja</h3>
+            <p>L. 30.00</p>
+        </div>
     </div>
+
+    <h2>🍿 Golosinas (Churros)</h2>
+    <div class="grid">
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1600957262269-9c3df3ed46ad?q=80&w=400" alt="Churros">
+            <h3>Zambos Original</h3>
+            <p>L. 12.00</p>
+        </div>
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1599490659223-930b447870ed?q=80&w=400" alt="Snacks">
+            <h3>Tortrix Barbacoa</h3>
+            <p>L. 10.00</p>
+        </div>
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1621444541669-0f1e97bb088d?q=80&w=400" alt="Tajaditas">
+            <h3>Tajaditas de Plátano</h3>
+            <p>L. 12.00</p>
+        </div>
+    </div>
+
 </div>
-
-<div id="modal" class="modal">
-    <div class="modal-content">
-        <h2 id="modalTitle">Enviar Recarga</h2>
-        <p id="modalDesc"></p>
-        <input type="tel" id="userPhone" class="input-num" placeholder="Escribe el número aquí" maxlength="8">
-        <button class="btn-ws" onclick="sendToWhatsApp()">
-            Enviar por WhatsApp
-        </button>
-        <button onclick="closeModal()" style="background:none; border:none; color: #888; margin-top: 15px; cursor:pointer;">Cancelar</button>
-    </div>
-</div>
-
-<script>
-    // --- CONFIGURACIÓN ---
-    const MI_WHATSAPP = "50492465428"; // REEMPLAZA CON TU NÚMERO
-
-    // --- DATOS EXTRAÍDOS DE TUS IMÁGENES ---
-    const saldoNormal = ["25.00", "50.00", "100.00", "150.00", "200.00", "250.00", "500.00"];
-
-    const superRecargas = [
-        { n: "Paquetigo 60 min TR/USA/CAN + 30MB", p: "35.00", v: "2 Días", d: "60 min a US/CAN/TR + 30MB" },
-        { n: "Súper Recarga 7 días", p: "122.00", v: "7 Días", d: "11.5GB + 1GB IG y X + WA + Min Tigo + FB + L300 saldo promo." },
-        { n: "Súper Recarga 15 días", p: "235.00", v: "15 Días", d: "23GB + 2GB TikTok, IG y X + WA + Min Tigo + FB + L600 saldo promo." },
-        { n: "Súper Recarga Gamer Pro, 7 días", p: "125.00", v: "7 Días", d: "15.5GB + 1GB TikTok/YT/Juegos (Clash, Free Fire, Candy) + Min Tigo + FB + L330 promo." },
-        { n: "Súper Recarga 1 día", p: "36.00", v: "1 Día", d: "2GB + Min Tigo + WA + L75 saldo promo." },
-        { n: "Súper Recarga 3 días", p: "67.00", v: "3 Días", d: "6.5GB + Min Tigo + WA + L150 saldo promo." },
-        { n: "Súper Recarga 10 días", p: "165.00", v: "10 Días", d: "15GB + 2GB TikTok, IG y X + Min Tigo + FB + L450 saldo promo." },
-        { n: "Súper Recarga Gamer Pro, 3 días", p: "70.00", v: "3 Días", d: "9GB + 1GB TikTok/YT/Juegos + Min Tigo + WA + L180 promo." },
-        { n: "Súper Recarga GB Ilimitados, 7 días", p: "160.00", v: "7 Días", d: "GB Ilimitados + ViX Premium + Min Tigo + WA + FB + L130 promo." },
-        { n: "Súper Recarga TikTok, 15 días", p: "255.00", v: "15 Días", d: "25.5GB + Min Tigo + WA + FB + L650 saldo promo." },
-        { n: "Súper Recarga TikTok, 10 días", p: "175.00", v: "10 Días", d: "16.5GB + Min Tigo + WA + FB + L450 saldo promo." },
-        { n: "Súper Recarga TikTok, 1 día", p: "40.00", v: "1 Día", d: "3GB + 500MB TikTok/YT + Min Tigo + WA + L100 promo." },
-        { n: "Suscripción 1 día Facebook Ilimitado", p: "22.00", v: "1 Día", d: "Navega en Facebook de forma ilimitada." },
-        { n: "Suscripción 1 día WhatsApp Chat Ilimitado", p: "32.00", v: "1 Día", d: "WhatsApp Chat ilimitado + 200MB para navegar." },
-        { n: "Paquetigo 25 min TR/USA/CAN", p: "25.00", v: "2 Días", d: "25 min a USA, Canadá y TR." },
-        { n: "ViX Premium por 7 días", p: "50.00", v: "7 Días", d: "Acceso total a contenido ViX Premium." },
-        { n: "Súper Recarga ViX Premium 10GB", p: "155.00", v: "7 Días", d: "10GB + Min Tigo + WA + ViX Premium + L300 promo." }
-    ];
-
-    let itemsSeleccionado = {};
-
-    // --- FUNCIONES ---
-    function showSection(id) {
-        document.querySelectorAll('.section-content').forEach(s => s.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        event.currentTarget.classList.add('active');
-    }
-
-    function init() {
-        // Cargar Normal
-        const nGrid = document.getElementById('normalGrid');
-        saldoNormal.forEach(monto => {
-            const btn = document.createElement('div');
-            btn.className = 'saldo-btn';
-            btn.innerText = 'L ' + monto;
-            btn.onclick = () => openModal("Saldo Normal", "L " + monto);
-            nGrid.appendChild(btn);
-        });
-
-        // Cargar Super
-        const sGrid = document.getElementById('superGrid');
-        superRecargas.forEach(item => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.onclick = () => openModal(item.n, "L " + item.p);
-            card.innerHTML = `
-                <div>
-                    <h3>${item.n}</h3>
-                    <span class="price-tag">L ${item.p}</span>
-                    <p class="details">${item.d}</p>
-                </div>
-                <span class="vigencia">Vigencia: ${item.v}</span>
-            `;
-            sGrid.appendChild(card);
-        });
-    }
-
-    function openModal(nombre, precio) {
-        itemsSeleccionado = { nombre, precio };
-        document.getElementById('modalTitle').innerText = precio;
-        document.getElementById('modalDesc').innerText = nombre;
-        document.getElementById('modal').style.display = 'block';
-    }
-
-    function closeModal() {
-        document.getElementById('modal').style.display = 'none';
-    }
-
-    function sendToWhatsApp() {
-        const num = document.getElementById('userPhone').value;
-        if (num.length < 8) {
-            alert("Por favor ingresa un número válido");
-            return;
-        }
-        const msg = `¡Hola! Quiero solicitar una recarga:\n\n📌 *Tipo:* ${itemsSeleccionado.nombre}\n💰 *Monto:* ${itemsSeleccionado.precio}\n📱 *Número:* ${num}`;
-        const url = `https://wa.me/${MI_WHATSAPP}?text=${encodeURIComponent(msg)}`;
-        window.open(url, '_blank');
-        closeModal();
-    }
-
-    init();
-</script>
 
 </body>
 </html>
